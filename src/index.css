@@ -1,4 +1,4 @@
-/* @import-normalize; bring in normalize.css styles
+/* @import-normalize; bring in normalize.css styles */
 
 @import 'modern-normalize/modern-normalize.css';
 
@@ -23,4 +23,4 @@ li {
 h1,
 h2 {
   color: #b92121;
-} */
+}
