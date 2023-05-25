@@ -46,7 +46,7 @@ export default function MovieDetailsPage() {
         <div className={s.notFound}>This movie is not found</div>
       ) : (
         <>
-          <button type="button" onClick={onGoBack}>
+          <button className={s.btn} type="button" onClick={onGoBack}>
             Go back
           </button>
           <div className={s.movieContainer}>
