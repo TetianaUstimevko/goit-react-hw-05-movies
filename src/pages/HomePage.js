@@ -21,26 +21,21 @@ const HomePage = () => {
       <h1>Tranding today</h1>
 
       {movies &&
-        movies.map(
-          ({
-            id,
-            title,
-            // poster_path
-          }) => (
-            <ul>
-              <li key={id}>
-                <Link
-                  to={{
-                    pathname: `/movies/${`${id}`}`,
-                    state: {
-                      from: {
-                        location,
-                        label: 'Back to Home',
-                      },
+        movies.map(({ id, title }) => (
+          <ul key={id}>
+            <li>
+              <Link
+                to={{
+                  pathname: `/movies/${id}`,
+                  state: {
+                    from: {
+                      location,
+                      label: 'Back to Home',
                     },
-                  }}
-                >
-                  {/* <img
+                  },
+                }}
+              >
+                {/* <img
                   src={
                     poster_path
                       ? `https://image.tmdb.org/t/p/w300${poster_path}`
@@ -48,12 +43,11 @@ const HomePage = () => {
                   }
                   alt={title}
                 /> */}
-                  <p>{title}</p>
-                </Link>
-              </li>
-            </ul>
-          )
-        )}
+                <p>{title}</p>
+              </Link>
+            </li>
+          </ul>
+        ))}
     </>
   );
 };

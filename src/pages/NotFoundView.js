@@ -1,11 +1,12 @@
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function NotFoundView() {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const onGoBack = () => {
-    history.push('/');
+    navigate('/');
   };
+
   return (
     <>
       <h2>404 Not Found </h2>

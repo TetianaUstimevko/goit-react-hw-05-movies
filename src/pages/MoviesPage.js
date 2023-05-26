@@ -1,8 +1,7 @@
 import s from './MoviesPage.module.css';
-
 import { useState, useEffect } from 'react';
 import { searchMovies } from '../services/movies-api';
-import { Link, useLocation, useHistory } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Notiflix from 'notiflix';
 
 const MoviesPage = () => {
@@ -10,7 +9,7 @@ const MoviesPage = () => {
   const [movies, setMovies] = useState([]);
 
   const location = useLocation();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const searchString = new URLSearchParams(location.search).get('query');
@@ -29,7 +28,7 @@ const MoviesPage = () => {
     }
   }, [location.search]);
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (movieToFind.trim()) {
@@ -44,9 +43,9 @@ const MoviesPage = () => {
         );
       }
 
-      history.push({
-        ...location,
-        search: `query=${movieToFind}`,
+      navigate({
+        pathname: location.pathname,
+        search: `?query=${movieToFind}`,
       });
     }
   };
@@ -56,7 +55,7 @@ const MoviesPage = () => {
       <header className={s.searchbar}>
         <form className={s.searchForm} onSubmit={handleSubmit}>
           <input
-            onChange={e => setMovieToFind(e.target.value)}
+            onChange={(e) => setMovieToFind(e.target.value)}
             className={s.SearchFormInput}
             type="text"
             autoComplete="off"
@@ -69,33 +68,32 @@ const MoviesPage = () => {
           </button>
         </form>
       </header>
-      {movies.length > 0 &&
-        movies.map(({ id, title, poster_path }) => (
-          <ul>
+      {movies.length > 0 && (
+        <ul>
+          {movies.map(({ id, title, poster_path }) => (
             <li key={id}>
               <Link
                 to={{
-                  pathname: `/movies/${`${id}`}`,
+                  pathname: `/movies/${id}`,
                   state: {
-                    from: {
-                      location,
-                    },
+                    from: location,
                   },
                 }}
               >
-                {/* <img
+                <img
                   src={
                     poster_path
                       ? `https://image.tmdb.org/t/p/w300${poster_path}`
                       : 'https://pomogaetsrazu.ru/images/offers/2829219234.jpg'
                   }
                   alt={title}
-                /> */}
+                />
                 <p>{title}</p>
               </Link>
             </li>
-          </ul>
-        ))}
+          ))}
+        </ul>
+      )}
     </>
   );
 };

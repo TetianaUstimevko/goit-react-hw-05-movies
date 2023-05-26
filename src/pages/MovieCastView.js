@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { getMovieCast, IMAGE_URL } from '../services/movies-api';
 import PropTypes from 'prop-types';
 
-export default function MovieCastView({ movieId }) {
+export default function MovieCastView() {
+  const { movieId } = useParams();
   const [cast, setCast] = useState([]);
 
   useEffect(() => {

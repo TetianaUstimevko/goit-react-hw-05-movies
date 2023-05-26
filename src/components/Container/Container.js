@@ -1,10 +1,11 @@
 import styles from './Container.module.css';
 import PropTypes from 'prop-types';
+import { Outlet } from 'react-router-dom';
 
-export default function Container({ children }) {
-  return <div className={styles.container}>{children}</div>;
+export default function Container() {
+  return <div className={styles.container}><Outlet /></div>;
 }
 
 Container.propTypes = {
-  children: PropTypes.array.isRequired,
+  children: PropTypes.element.isRequired,
 };

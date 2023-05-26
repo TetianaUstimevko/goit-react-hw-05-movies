@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { getReviews } from '../services/movies-api';
 import PropTypes from 'prop-types';
 
-export default function MovieReview({ movieId }) {
+export default function MovieReview() {
+  const { movieId } = useParams();
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {

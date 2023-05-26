@@ -1,4 +1,4 @@
-import { Route, Switch } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Navigation from './components/Navigation/Navigation';
 import { lazy, Suspense } from 'react';
 import Container from './components/Container/Container';
@@ -24,21 +24,12 @@ export default function App() {
     <Container>
       <Navigation />
       <Suspense fallback={<Loader />}>
-        <Switch>
-          <Route exact path="/">
-            <HomePage />
-          </Route>
-          <Route exact path="/movies">
-            <MoviesPage />
-          </Route>
-          <Route path="/movies/:movieId">
-            <MovieDetailsPage />
-          </Route>
-
-          <Route>
-            <NotFoundView path="*" />
-          </Route>
-        </Switch>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/movies" element={<MoviesPage />} />
+          <Route path="/movies/:movieId" element={<MovieDetailsPage />} />
+          <Route path="*" element={<NotFoundView />} />
+        </Routes>
       </Suspense>
     </Container>
   );

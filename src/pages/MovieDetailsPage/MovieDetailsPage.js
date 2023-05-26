@@ -1,12 +1,11 @@
-import Loader from 'components/Loader/Loader';
 import { useState, useEffect, lazy, Suspense } from 'react';
 import {
   useParams,
   NavLink,
-  useRouteMatch,
+  useMatch,
   useLocation,
-  useHistory,
-  Switch,
+  useNavigate,
+  Routes,
   Route,
 } from 'react-router-dom';
 import { getMovieDetails, IMAGE_URL } from '../../services/movies-api';
@@ -22,14 +21,13 @@ const MovieCastView = lazy(() =>
 export default function MovieDetailsPage() {
   const [movie, setMovie] = useState(null);
   const { movieId } = useParams();
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
-  const { url, path } = useRouteMatch();
+  const match = useMatch();
 
   useEffect(() => {
     const getMovie = async () => {
       const currentMovie = await getMovieDetails(movieId);
-
       setMovie(currentMovie);
     };
 
@@ -37,7 +35,7 @@ export default function MovieDetailsPage() {
   }, [movieId]);
 
   const onGoBack = () => {
-    history.push(location?.state?.from?.location ?? '/movies');
+    navigate(location?.state?.from?.location ?? '/movies');
   };
 
   return (
@@ -58,7 +56,7 @@ export default function MovieDetailsPage() {
                     : `https://bitsofco.de/content/images/2018/12/broken-1.png`
                 }
                 alt={movie.title}
-                widht=""
+                width=""
                 height=""
               />
             </div>
@@ -69,7 +67,7 @@ export default function MovieDetailsPage() {
               <h3>Overview</h3>
               <p>{`${movie.overview}`}</p>
               <h3>Genres</h3>
-              <p>{`${movie.genres.map(genre => genre.name).join(' / ')}`}</p>
+              <p>{`${movie.genres.map((genre) => genre.name).join(' / ')}`}</p>
             </div>
           </div>
         </>
@@ -78,14 +76,14 @@ export default function MovieDetailsPage() {
       <p>Additional information</p>
       <nav>
         <NavLink
-          to={{ pathname: `${url}/cast`, state: location.state }}
+          to={`${match.url}/cast`}
           className={s.link}
           activeClassName={s.active}
         >
           Cast
         </NavLink>
         <NavLink
-          to={{ pathname: `${url}/reviews`, state: location.state }}
+          to={`${match.url}/reviews`}
           className={s.link}
           activeClassName={s.active}
         >
@@ -94,15 +92,10 @@ export default function MovieDetailsPage() {
       </nav>
 
       <Suspense fallback={<Loader />}>
-        <Switch>
-          <Route path={`${path}/cast`}>
-            <MovieCastView movieId={movieId} />
-          </Route>
-
-          <Route path={`${path}/reviews`}>
-            <MovieReview movieId={movieId} />
-          </Route>
-        </Switch>
+        <Routes>
+          <Route path="cast" element={<MovieCastView movieId={movieId} />} />
+          <Route path="reviews" element={<MovieReview movieId={movieId} />} />
+        </Routes>
       </Suspense>
     </>
   );
