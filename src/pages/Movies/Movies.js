@@ -17,11 +17,7 @@ const Movies = () => {
   };
 
   const fetchMovies = async () => {
-    // Fetch movies based on the query and page using the API
-    // Replace `apiCall` with your actual API call
     const response = await apiCall(query, page);
-
-    // Update the movies state with the fetched movies
     setMovies(response.data.results);
   };
 
