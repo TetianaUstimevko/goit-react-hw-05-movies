@@ -1,36 +1,23 @@
-import { Route, Routes } from 'react-router-dom';
-import Navigation from './components/Navigation/Navigation';
-import { lazy, Suspense } from 'react';
-import Container from './components/Container/Container';
-import Loader from 'components/Loader/Loader';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home/Home';
+import Movies from './pages/Movies/Movies';
+import MovieDetails from './pages/MovieDetails/MovieDetails';
+import Cast from './pages/MovieDetails/MovieDetails';
+import Reviews from './pages/Reviews/Reviews';
 
-const HomePage = lazy(() =>
-  import('./pages/HomePage' /* webpackChunkName:"HomePage" */)
-);
-const MoviesPage = lazy(() =>
-  import('./pages/MoviesPage' /* webpackChunkName:"MoviesPage" */)
-);
-const MovieDetailsPage = lazy(() =>
-  import(
-    './pages/MovieDetailsPage/MovieDetailsPage' /* webpackChunkName:"MovieDetailsPage" */
-  )
-);
-const NotFoundView = lazy(() =>
-  import('./pages/NotFoundView' /* webpackChunkName:"NotFoundView" */)
-);
-
-export default function App() {
+const App = () => {
   return (
-    <Container>
-      <Navigation />
-      <Suspense fallback={<Loader />}>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/movies" element={<MoviesPage />} />
-          <Route path="/movies/:movieId" element={<MovieDetailsPage />} />
-          <Route path="*" element={<NotFoundView />} />
-        </Routes>
-      </Suspense>
-    </Container>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/movies" element={<Movies />} />
+        <Route path="/movies/:movieId" element={<MovieDetails />} />
+        <Route path="/movies/:movieId/cast" element={<Cast />} />
+        <Route path="/movies/:movieId/reviews" element={<Reviews />} />
+      </Routes>
+    </Router>
   );
-}
+};
+
+export default App;
