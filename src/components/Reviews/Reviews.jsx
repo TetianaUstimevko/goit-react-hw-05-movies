@@ -1,35 +1,34 @@
-import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import api from '../services/api';
-import s from './Reviews.module.css';
+import { fetchReviews } from 'components/Api';
+import { useState, useEffect } from 'react';
 
-const Reviews = () => {
+export const Reviews = () => {
   const { movieId } = useParams();
-  const [reviews, setReviews] = useState([]);
+  const [reviews, setReviews] = useState(null);
 
   useEffect(() => {
-    const fetchMovieReviews = async () => {
+    async function getReviewsDetails() {
       try {
-        const response = await api.getMovieReviews(movieId);
-        setReviews(response.data.results);
+        const detailsReviews = await fetchReviews(movieId);
+        setReviews(detailsReviews.reviewsData);
       } catch (error) {
-        console.log('Error:', error);
+        console.log(error);
       }
-    };
+    }
 
-    fetchMovieReviews();
+    getReviewsDetails();
   }, [movieId]);
 
   return (
     <div>
-      <h3 className={s.ReviewsTitle}>Reviews</h3>
-      <ul className={s.ReviewsList}>
-        {reviews.map((review) => (
-          <li className={s.ReviewsItem} key={review.id}>{review.content}</li>
+      {reviews !== null &&
+        reviews.map(({ id, author, content }) => (
+          <ul key={id}>
+            <li>Author: {author}</li>
+            <li>About movie:</li>
+            <p>{content}</p>
+          </ul>
         ))}
-      </ul>
     </div>
   );
 };
-
-export default Reviews;

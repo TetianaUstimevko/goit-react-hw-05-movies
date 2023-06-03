@@ -1,37 +1,89 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import MovieList from '../components/MovieList';
-import LoadMore from '../components/LoadMore';
+import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import { fetchByQuery } from 'components/Api';
+import { Link } from 'react-router-dom';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Movies = () => {
-  const navigate = useNavigate();
-  const [query, setQuery] = useState('');
   const [movies, setMovies] = useState([]);
-  const [page, setPage] = useState(1);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const movieId = searchParams.get('movieId');
 
-  const handleSearch = () => {
-    if (query.trim() !== '') {
-      navigate(`/movies?query=${query}`);
-      fetchMovies();
+  useEffect(() => {
+    async function getSearch() {
+      if (!movieId) {
+        return;
+      }
+
+      try {
+        const { queryData } = await fetchByQuery(movieId);
+        console.log(queryData);
+        setMovies(queryData);
+
+        if (queryData.length === 0) {
+          toast.warning(
+            'Sorry, there are no movies matching your search query. Please try again',
+            {
+              position: 'top-center',
+              theme: 'colored',
+            }
+          );
+        } else {
+          toast.success(`Hooray!!! We found your movies`, {
+            position: 'top-left',
+            theme: 'colored',
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
-  };
 
-  const fetchMovies = async () => {
-    const response = await apiCall(query, page);
-    setMovies(response.data.results);
+    getSearch();
+  }, [movieId]);
+
+  const handleSearchSubmit = e => {
+    e.preventDefault();
+
+    const form = e.currentTarget;
+    const searchQuery = form.elements.movieId.value.trim();
+
+    if (searchQuery !== '') {
+      setSearchParams({ movieId: searchQuery });
+      form.reset();
+    } else {
+      toast.warning('Please enter a movie title', {
+        position: 'top-center',
+        theme: 'colored',
+      });
+    }
   };
 
   return (
     <div>
-      <h2>Search Movies</h2>
-      <input
-        type="text"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-      />
-      <button onClick={handleSearch}>Search</button>
-      <MovieList movies={movies} />
-      <LoadMore onClick={() => setPage(page + 1)} />
+      <form onSubmit={handleSearchSubmit}>
+        <input
+          type="text"
+          autoComplete="off"
+          autoFocus
+          placeholder="Search movie title"
+          name="movieId"
+        />
+
+        <button type="submit">Search</button>
+      </form>
+      <ToastContainer autoClose={2000} />
+
+      {movies.length > 0 && (
+        <ul>
+          {movies.map(({ id, title }) => (
+            <li key={id}>
+              <Link to={`/movies/${id}`}>{title}</Link>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };

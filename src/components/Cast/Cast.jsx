@@ -1,35 +1,35 @@
-import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import api from '../services/api';
-import s from './Cast.module.css';
+import { fetchCredits } from 'components/Api';
+import { useState, useEffect } from 'react';
 
-const Cast = () => {
+export const Cast = () => {
   const { movieId } = useParams();
-  const [cast, setCast] = useState([]);
+  const [castDetails, setCastDetails] = useState([]);
 
   useEffect(() => {
-    const fetchMovieCast = async () => {
+    async function getCastDetails() {
       try {
-        const response = await api.getMovieCredits(movieId);
-        setCast(response.data.cast);
+        const detailsCast = await fetchCredits(movieId);
+        console.log(detailsCast);
+        setCastDetails(detailsCast.cast);
       } catch (error) {
-        console.log('Error:', error);
+        console.log(error);
       }
-    };
+    }
 
-    fetchMovieCast();
+    getCastDetails();
   }, [movieId]);
 
   return (
     <div>
-      <h3 className={s.Cast}>Cast</h3>
-      <ul className={s.actor-list}>
-        {cast.map((actor) => (
-          <li className={s.actor-item} key={actor.id}>{actor.name}</li>
+      {castDetails.length > 0 &&
+        castDetails.map(({ id, name, photo, character }) => (
+          <ul key={id}>
+            <img src={photo} alt={name} />
+            <h1>{name}</h1>
+            <h2>Character: {character}</h2>
+          </ul>
         ))}
-      </ul>
     </div>
   );
 };
-
-export default Cast;

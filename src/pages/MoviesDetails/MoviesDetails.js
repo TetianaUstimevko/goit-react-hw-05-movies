@@ -1,36 +1,55 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import api from '../services/api';
-import Cast from '../components/Cast';
-import Reviews from '../components/Reviews';
+import { useEffect, useState } from 'react';
+import { Outlet, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { fetchDetailsMovies } from 'components/Api';
 
 const MovieDetails = () => {
   const { movieId } = useParams();
-  const [movie, setMovie] = useState(null);
+  const [movieDetails, setMovieDetails] = useState([]);
+
+  const { poster, title, vote, genres, overview, year } = movieDetails ?? {};
 
   useEffect(() => {
-    const fetchMovieDetails = async () => {
+    async function getMovieDetails() {
       try {
-        const response = await api.getMovieDetails(movieId);
-        setMovie(response.data);
+        const detailsMovie = await fetchDetailsMovies(movieId);
+
+        setMovieDetails(detailsMovie);
       } catch (error) {
-        console.log('Error:', error);
+        console.log(error);
       }
-    };
+    }
 
-    fetchMovieDetails();
+    getMovieDetails();
   }, [movieId]);
-
-  if (!movie) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <div>
-      <h2>{movie.title}</h2>
-      <p>{movie.overview}</p>
-      <Cast movieId={movieId} />
-      <Reviews movieId={movieId} />
+      <div>
+        {movieDetails && (
+          <div>
+            <img src={poster} alt={title} />
+            <h1>
+              {title}({year})
+            </h1>
+            <p>User score: {vote}</p>
+            <h2>Overweiw</h2>
+            <p>{overview}</p>
+            <h3>Genres</h3>
+            <p>{genres}</p>
+          </div>
+        )}
+      </div>
+
+      <ul>
+        <li>
+          <Link to="cast"> Cast</Link>
+        </li>
+        <li>
+          <Link to="reviews"> Reviews </Link>
+        </li>
+      </ul>
+      <Outlet />
     </div>
   );
 };
