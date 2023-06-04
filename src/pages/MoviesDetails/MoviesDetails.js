@@ -1,7 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Outlet, useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import { fetchDetailsMovies } from 'components/Api';
+import {
+  StyledContainer,
+  StyledFilmName,
+  StyledImgContainer,
+  StyledDescriptionContainer,
+  StyledUserRating, StyledListMoviesDetails, StyledLink
+} from './MoviesDetails.styled';
 
 const MovieDetails = () => {
   const { movieId } = useParams();
@@ -24,33 +30,42 @@ const MovieDetails = () => {
   }, [movieId]);
 
   return (
-    <div>
+    <StyledContainer>
       <div>
         {movieDetails && (
-          <div>
+          <StyledImgContainer>
             <img src={poster} alt={title} />
-            <h1>
-              {title}({year})
-            </h1>
-            <p>User score: {vote}</p>
-            <h2>Overweiw</h2>
-            <p>{overview}</p>
-            <h3>Genres</h3>
-            <p>{genres}</p>
-          </div>
+            <StyledDescriptionContainer>
+              <StyledFilmName>
+                {title}({year})
+              </StyledFilmName>
+              <StyledUserRating>User score: {vote}</StyledUserRating>
+              <h2>Overweiw</h2>
+              <p>{overview}</p>
+              <h3>Genres</h3>
+              <p>{genres}</p>
+            </StyledDescriptionContainer>
+          </StyledImgContainer>
         )}
       </div>
 
-      <ul>
+       {/* <StyledBackButton
+            type="button"
+            onClick={() => navigate(location.state?.from ?? '/movies')}
+          >
+            Go Back
+          </StyledBackButton> */}
+
+      <StyledListMoviesDetails>
         <li>
-          <Link to="cast"> Cast</Link>
+          <StyledLink to="cast"> Cast</StyledLink>
         </li>
         <li>
-          <Link to="reviews"> Reviews </Link>
+          <StyledLink to="reviews"> Reviews </StyledLink>
         </li>
-      </ul>
+      </StyledListMoviesDetails>
       <Outlet />
-    </div>
+    </StyledContainer>
   );
 };
 

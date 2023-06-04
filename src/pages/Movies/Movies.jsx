@@ -4,6 +4,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { fetchByQuery } from 'components/Api';
 import { Link } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
+import { StyledForm, StyledSearchInput, StyledSearchButton } from './Movies.styled';
 
 const Movies = () => {
   const [movies, setMovies] = useState([]);
@@ -62,8 +63,8 @@ const Movies = () => {
 
   return (
     <div>
-      <form onSubmit={handleSearchSubmit}>
-        <input
+      <StyledForm onSubmit={handleSearchSubmit}>
+        <StyledSearchInput
           type="text"
           autoComplete="off"
           autoFocus
@@ -71,8 +72,8 @@ const Movies = () => {
           name="movieId"
         />
 
-        <button type="submit">Search</button>
-      </form>
+        <StyledSearchButton type="submit">Search</StyledSearchButton>
+      </StyledForm>
       <ToastContainer autoClose={2000} />
 
       {movies.length > 0 && (
