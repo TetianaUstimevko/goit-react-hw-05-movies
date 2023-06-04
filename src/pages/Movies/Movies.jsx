@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import { fetchByQuery } from 'components/Api';
-import { Link } from 'react-router-dom';
+
 import 'react-toastify/dist/ReactToastify.css';
-import { StyledForm, StyledSearchInput, StyledSearchButton } from './Movies.styled';
+import { StyledForm, StyledSearchInput, StyledSearchButton, StyledLink } from './Movies.styled';
 
 const Movies = () => {
   const [movies, setMovies] = useState([]);
@@ -80,7 +80,7 @@ const Movies = () => {
         <ul>
           {movies.map(({ id, title }) => (
             <li key={id}>
-              <Link to={`/movies/${id}`}>{title}</Link>
+              <StyledLink to={`/movies/${id}`}>{title}</StyledLink>
             </li>
           ))}
         </ul>

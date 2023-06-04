@@ -45,7 +45,3 @@ export const StyledLink = styled(Link)`
     text-decoration: underline;
   }
 `;
-
-// export const StyledBackButton = styled(StyledSearchButton)`
-//   margin-left: 10px;
-// `;

@@ -29,6 +29,8 @@ const MovieDetails = () => {
     getMovieDetails();
   }, [movieId]);
 
+   
+
   return (
     <StyledContainer>
       <div>
@@ -45,25 +47,24 @@ const MovieDetails = () => {
               <h3>Genres</h3>
               <p>{genres}</p>
             </StyledDescriptionContainer>
+
+
+            
           </StyledImgContainer>
         )}
       </div>
 
-       {/* <StyledBackButton
-            type="button"
-            onClick={() => navigate(location.state?.from ?? '/movies')}
-          >
-            Go Back
-          </StyledBackButton> */}
-
-      <StyledListMoviesDetails>
+      
+      
+       <StyledListMoviesDetails>
         <li>
           <StyledLink to="cast"> Cast</StyledLink>
         </li>
         <li>
           <StyledLink to="reviews"> Reviews </StyledLink>
         </li>
-      </StyledListMoviesDetails>
+        </StyledListMoviesDetails>
+        
       <Outlet />
     </StyledContainer>
   );

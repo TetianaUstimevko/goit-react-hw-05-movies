@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { fetchCredits } from 'components/Api';
 import { useState, useEffect } from 'react';
+import { StyledActorContainer, StyledActorName, StyledActorCharacter } from './Cast.styled';
 
 export const Cast = () => {
   const { movieId } = useParams();
@@ -21,15 +22,15 @@ export const Cast = () => {
   }, [movieId]);
 
   return (
-    <div>
+    <StyledActorContainer>
       {castDetails.length > 0 &&
         castDetails.map(({ id, name, photo, character }) => (
           <ul key={id}>
             <img src={photo} alt={name} />
-            <h1>{name}</h1>
-            <h2>Character: {character}</h2>
+            <StyledActorName>{name}</StyledActorName>
+            <StyledActorCharacter>Character: {character}</StyledActorCharacter>
           </ul>
         ))}
-    </div>
+    </StyledActorContainer>
   );
 };
