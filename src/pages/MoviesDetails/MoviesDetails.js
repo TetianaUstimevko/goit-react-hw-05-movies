@@ -6,7 +6,10 @@ import {
   StyledFilmName,
   StyledImgContainer,
   StyledDescriptionContainer,
-  StyledUserRating, StyledListMoviesDetails, StyledLink, BackLink
+  StyledUserRating,
+  StyledListMoviesDetails,
+  StyledLink,
+  BackLink,
 } from './MoviesDetails.styled';
 
 const MovieDetails = () => {
@@ -31,16 +34,15 @@ const MovieDetails = () => {
 
   if (!movieDetails) {
     return;
-  };
+  }
 
   const { poster, title, vote, genres, overview, year } = movieDetails;
-   
-console.log(location)
+
+  console.log(location);
 
   return (
     <StyledContainer>
       <div>
-
         <BackLink to={backLinkLocationRes.current}>Go back</BackLink>
 
         {movieDetails && (
@@ -56,24 +58,19 @@ console.log(location)
               <h3>Genres</h3>
               <p>{genres}</p>
             </StyledDescriptionContainer>
-
-
-            
           </StyledImgContainer>
         )}
       </div>
 
-      
-      
-       <StyledListMoviesDetails>
+      <StyledListMoviesDetails>
         <li>
           <StyledLink to="cast"> Cast</StyledLink>
         </li>
         <li>
           <StyledLink to="reviews"> Reviews </StyledLink>
         </li>
-        </StyledListMoviesDetails>
-        
+      </StyledListMoviesDetails>
+
       <Outlet />
     </StyledContainer>
   );

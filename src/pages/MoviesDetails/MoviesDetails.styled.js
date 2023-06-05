@@ -38,7 +38,7 @@ export const StyledLink = styled(Link)`
   font-size: 20px;
   text-decoration: none;
   color: #1261e0;
- transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 
   &:hover,
   &:focus-visible {
@@ -52,13 +52,13 @@ export const BackLink = styled(NavLink)`
   font-size: 20px;
   font-weight: 600;
   margin-left: 40px;
-margin-top: 15px;
-margin-bottom: 15px;
-text-decoration: none;
-color: #515133;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  text-decoration: none;
+  color: #515133;
 
-&:hover {
-  fon-weight: 800;
-};
-
+  &:hover {
+    fon-weight: 800;
+    color: #124ece;
+  }
 `;
