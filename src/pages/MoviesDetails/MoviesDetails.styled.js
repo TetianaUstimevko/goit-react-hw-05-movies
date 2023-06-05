@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 export const StyledContainer = styled.div`
   display: flex;
@@ -44,4 +45,20 @@ export const StyledLink = styled(Link)`
     color: #eb1b0c;
     text-decoration: underline;
   }
+`;
+
+export const BackLink = styled(NavLink)`
+  display: flex;
+  font-size: 20px;
+  font-weight: 600;
+  margin-left: 40px;
+margin-top: 15px;
+margin-bottom: 15px;
+text-decoration: none;
+color: #515133;
+
+&:hover {
+  fon-weight: 800;
+};
+
 `;

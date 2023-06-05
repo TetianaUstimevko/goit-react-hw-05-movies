@@ -1,19 +1,19 @@
-import { useEffect, useState } from 'react';
-import { Outlet, useParams } from 'react-router-dom';
+import { useEffect, useState, useRef } from 'react';
+import { Outlet, useParams, useLocation } from 'react-router-dom';
 import { fetchDetailsMovies } from 'components/Api';
 import {
   StyledContainer,
   StyledFilmName,
   StyledImgContainer,
   StyledDescriptionContainer,
-  StyledUserRating, StyledListMoviesDetails, StyledLink
+  StyledUserRating, StyledListMoviesDetails, StyledLink, BackLink
 } from './MoviesDetails.styled';
 
 const MovieDetails = () => {
   const { movieId } = useParams();
-  const [movieDetails, setMovieDetails] = useState([]);
-
-  const { poster, title, vote, genres, overview, year } = movieDetails ?? {};
+  const [movieDetails, setMovieDetails] = useState(null);
+  const location = useLocation();
+  const backLinkLocationRes = useRef(location.state?.from ?? '/');
 
   useEffect(() => {
     async function getMovieDetails() {
@@ -29,11 +29,20 @@ const MovieDetails = () => {
     getMovieDetails();
   }, [movieId]);
 
+  if (!movieDetails) {
+    return;
+  };
+
+  const { poster, title, vote, genres, overview, year } = movieDetails;
    
+console.log(location)
 
   return (
     <StyledContainer>
       <div>
+
+        <BackLink to={backLinkLocationRes.current}>Go back</BackLink>
+
         {movieDetails && (
           <StyledImgContainer>
             <img src={poster} alt={title} />
