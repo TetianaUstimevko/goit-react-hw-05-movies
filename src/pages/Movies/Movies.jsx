@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import { fetchByQuery } from 'components/Api';
+import MoviesList from 'components/MovieList/MovieList';
 
 import 'react-toastify/dist/ReactToastify.css';
-import { StyledForm, StyledSearchInput, StyledSearchButton, StyledLink } from './Movies.styled';
+import { StyledForm, StyledSearchInput, StyledSearchButton } from './Movies.styled';
 
 const Movies = () => {
   const [movies, setMovies] = useState([]);
@@ -44,7 +45,7 @@ const Movies = () => {
     getSearch();
   }, [movieId]);
 
-  const handleSearchSubmit = e => {
+  const handleSearchSubmit = (e) => {
     e.preventDefault();
 
     const form = e.currentTarget;
@@ -76,15 +77,7 @@ const Movies = () => {
       </StyledForm>
       <ToastContainer autoClose={2000} />
 
-      {movies.length > 0 && (
-        <ul>
-          {movies.map(({ id, title }) => (
-            <li key={id}>
-              <StyledLink to={`/movies/${id}`}>{title}</StyledLink>
-            </li>
-          ))}
-        </ul>
-      )}
+      {movies.length > 0 && <MoviesList movies={movies} />}
     </div>
   );
 };

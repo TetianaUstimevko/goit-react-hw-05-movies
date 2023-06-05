@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { fetchTrendingMovies } from 'components/Api';
+import MoviesList from 'components/MovieList/MovieList';
 
-import { StyledHomeHeading, StyledFilmList, StyledLink } from './Home.styled';
+import { StyledHomeHeading } from './Home.styled';
 
 const Home = () => {
   const [movies, setMovies] = useState([]);
@@ -9,9 +10,8 @@ const Home = () => {
   useEffect(() => {
     async function getMovies() {
       try {
-        const trandingMovies = await fetchTrendingMovies();
-
-        setMovies(trandingMovies.movies);
+        const trendingMovies = await fetchTrendingMovies();
+        setMovies(trendingMovies.movies);
       } catch (error) {
         console.log(error);
       }
@@ -22,16 +22,9 @@ const Home = () => {
 
   return (
     <div>
-      <StyledHomeHeading>Tranding today</StyledHomeHeading>
+      <StyledHomeHeading>Trending today</StyledHomeHeading>
 
-      {movies.length > 0 &&
-        movies.map(({ id, title }) => (
-          <StyledFilmList key={id}>
-            <li>
-              <StyledLink to={`/movies/${id}`}> {title} </StyledLink>
-            </li>
-          </StyledFilmList>
-        ))}
+      {movies.length > 0 && <MoviesList movies={movies} />}
     </div>
   );
 };
