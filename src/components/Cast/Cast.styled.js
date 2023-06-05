@@ -27,3 +27,9 @@ export const StyledActorName = styled.h1`
 export const StyledActorCharacter = styled.h2`
   font-size: 15px;
 `;
+
+export const NoCast = styled.p`
+  margin-left: 40px;
+  color: red;
+  font-style: italic;
+`;

@@ -30,3 +30,9 @@ export const StyledReviewAboutMovie = styled.li`
 export const StyledReviewPost = styled.p`
   font-size: 16px;
 `;
+
+export const NoReviews = styled.p`
+  margin-left: 40px;
+  color: red;
+  font-style: italic;
+`;

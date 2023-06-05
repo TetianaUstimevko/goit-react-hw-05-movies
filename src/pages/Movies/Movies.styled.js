@@ -2,9 +2,11 @@ import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 
 export const StyledForm = styled.form`
+  display: flex;
+  margin-top: 30px;
+  left: 0;
   position: sticky;
   z-index: 1100;
-  display: flex;
   justify-content: center;
   align-items: center;
   min-height: 64px;
@@ -20,6 +22,7 @@ export const StyledForm = styled.form`
 `;
 
 export const StyledSearchInput = styled.input`
+
   outline: none;
   border: none;
 
